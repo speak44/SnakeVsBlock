@@ -4,11 +4,15 @@ using System.Collections;
 
 public class TouchEventListener : EventTrigger
 {
-
+    
+    
     public override void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("==============Screen.width================== " + Screen.width);
-        Debug.Log("================Screen.height================ " + Screen.height);
-        //Debug.Log("============ " + eventData.pointerCurrentRaycast.worldPosition.x);
+        //Vector3 newPos = SnakeManage.GetInstance().mainCamera.WorldToScreenPoint(SnakeManage.GetInstance().snakeObj.transform.localPosition);
+        //Debug.Log("==============x================== " + eventData.position.x);
+        //Debug.Log("================y================ " + eventData.position.y);
+        
+        //Debug.Log("==============x================== " + newPos.x);
+        //Debug.Log("================y================ " + SnakeManage.GetInstance().snakeObj.transform.localPosition.y);
     }
 }
