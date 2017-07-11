@@ -1,29 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
-public class TouchEventListener : MonoBehaviour {
+public class TouchEventListener : EventTrigger
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        Debug.Log("=============1================" + Input.touchCount);
-        if (Input.touchCount > 0)
-        {
-            Debug.Log("=============2================");
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
-            {
-                Debug.Log("=============x================" + Input.GetTouch(0).position.x);
-                Debug.Log("=============y================" + Input.GetTouch(0).position.y);
-            }
-        }
-	}
-
-    void OnGUI()
+    public override void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("============OnGUI================" + Input.touchCount);
+        Debug.Log("==============Screen.width================== " + Screen.width);
+        Debug.Log("================Screen.height================ " + Screen.height);
+        //Debug.Log("============ " + eventData.pointerCurrentRaycast.worldPosition.x);
     }
 }
