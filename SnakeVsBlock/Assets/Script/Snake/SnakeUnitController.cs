@@ -50,6 +50,8 @@ public class SnakeUnitController : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning("_parent:null" + index);
+//            transform.localPosition = Vector3.zero;
             _posQueue.Enqueue(transform.localPosition);
         }
     }
@@ -82,6 +84,37 @@ public class SnakeUnitController : MonoBehaviour
                 _posQueue.Enqueue(_lastTarget);
             }
             _speedMagnitude -= distance;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D cell)
+    {
+        if (cell.gameObject.name.Equals("WallUnit(Clone)"))
+        {
+            GGDebug.Log("---蛇：-----开始碰撞-------");
+            GGDebug.Log(cell.gameObject.name);
+            SnakeManage.GetInstance().DelSnakeUnit();
+            Destroy(gameObject);
+        }
+        if (cell.gameObject.name.Equals("France1(Clone)") || cell.gameObject.name.Equals("France2(Clone)"))
+        {
+            LogicPartController.GetInstance().IsTriggerWall = true;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D cell)
+    {
+//        if (cell.gameObject.name.Equals("France1(Clone)") || cell.gameObject.name.Equals("France2(Clone)"))
+//        {
+//            LogicPartController.GetInstance().IsTriggerWall = false;
+//        }
+    }
+
+    void OnTriggerExit2D(Collider2D cell)
+    {
+        if (cell.gameObject.name.Equals("France1(Clone)") || cell.gameObject.name.Equals("France2(Clone)"))
+        {
+            LogicPartController.GetInstance().IsTriggerWall = false;
         }
     }
 

@@ -8,6 +8,8 @@ public class WallUnitController : MonoBehaviour {
 
     public Text lifeNumText;
 
+    private int lifeNum;
+
     public static WallUnitController Create()
     {
         GameObject go = Instantiate(Resources.Load(PREFAB_PATH)) as GameObject;
@@ -19,9 +21,26 @@ public class WallUnitController : MonoBehaviour {
         return script;
     }
 
+    void OnTriggerEnter2D(Collider2D cell)
+    {
+        GGDebug.Log("-----墙：---开始碰撞-------");
+        DelLifeNum();
+    }
+
     public void Refresh()
     {
         if (lifeNumText != null)
-            lifeNumText.text = Random.Range(0, 51).ToString();
+        {
+            lifeNum = Random.Range(1, 51);
+            lifeNumText.text = lifeNum.ToString();
+        }
+    }
+
+    public void DelLifeNum()
+    {
+        lifeNum -= 1;
+        lifeNumText.text = lifeNum.ToString();
+        if (lifeNum == 0)
+            Destroy(gameObject);
     }
 }

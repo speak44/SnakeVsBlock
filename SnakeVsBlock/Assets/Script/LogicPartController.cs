@@ -9,6 +9,7 @@ public class LogicPartController : MonoBehaviour {
     private float dragMoveDisX = 0f; //拖拽时X轴偏移量
     public float speed = 0.00000001f; //蛇向上移动的速度,2/deltaTime
     public float lerpRate = 0.1f;
+    public bool IsTriggerWall = false;
 
     void Awake()
     {
@@ -26,18 +27,29 @@ public class LogicPartController : MonoBehaviour {
         return instance;
     }
 
+    public bool isPause = false;
+
     float lastX = 0;
     void FixedUpdate()
     {
+        
         Vector3 unitV = new Vector2(Mathf.Lerp(lastX, DragEventListener.xSpeed, lerpRate), speed);
+        if (IsTriggerWall)
+            unitV = new Vector3(0f, unitV.y);
         lastX = unitV.x;
         SnakeUnitController.moveSpeed = unitV.magnitude * Time.fixedDeltaTime;
         List<SnakeUnitController> snakeList = SnakeManage.GetInstance().GetSnakeList(); //头节点
+        //游戏结束！
+        if (isPause || snakeList.Count == 0)
+        {
+            GGDebug.Log("游戏结束！");
+            return;
+        }
         SnakeUnitController firstSnake = snakeList[0];
         firstSnake.transform.localPosition += unitV.normalized * SnakeUnitController.moveSpeed;
-
+        Vector3 pos = firstSnake.transform.localPosition;
         //生命数目text
-        SnakeManage.GetInstance().lifeNumText.transform.localPosition += unitV.normalized * SnakeUnitController.moveSpeed;
+        SnakeManage.GetInstance().lifeNumText.transform.localPosition = pos + new Vector3(0f, 40f, 0);
 
         //Debug.Log(SnakeUnit.moveSpeed);
         for (int i = 0; i < snakeList.Count; i++)
@@ -47,7 +59,7 @@ public class LogicPartController : MonoBehaviour {
 
         //创造障碍物
         Vector3 curSnakePos = SnakeManage.GetInstance().GetLifeNumTextPos();
-        if ((WallManage.GetInstance().curCreateWallIndex*Global.wallHeight/2 - curSnakePos.y) <= Screen.height/2) //创建新的一排障碍物
+        if ((WallManage.GetInstance().curCreateWallIndex * Global.wallHeight - curSnakePos.y - Global.wallHeight) <= Screen.height/2) //创建新的一排障碍物
         {
             if (WallManage.GetInstance().curHorizontalType == Global.WallHorizontalType.INIT) //初始第一排
             {

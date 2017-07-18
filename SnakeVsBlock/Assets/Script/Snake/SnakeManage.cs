@@ -47,9 +47,7 @@ public class SnakeManage : MonoBehaviour {
     //初始游戏5条命，数字显示从0开始
     public void InitSnake()
     {
-        //初始生命5 Text
-        this.lifeCounts = initSnakeCouts;
-        this.SetLifeNumText();
+        
 
         //添加初始位置
         for (int i = 0; i < mInitPos.Count; i++)
@@ -58,6 +56,8 @@ public class SnakeManage : MonoBehaviour {
             mSnakeList.Add(unit);
             this.AddSnakeUnit(unit.gameObject, mInitPos[i]);
         }
+        lifeCounts = mSnakeList.Count;
+        SetLifeNumText();
     }
 
     //设置生命数目Text
@@ -70,7 +70,8 @@ public class SnakeManage : MonoBehaviour {
         }
         else
         {
-            lifeNumText.text = this.lifeCounts - 1 + "";
+            lifeCounts = mSnakeList.Count;
+            lifeNumText.text = this.lifeCounts + "";
         }
     }
 
@@ -113,6 +114,22 @@ public class SnakeManage : MonoBehaviour {
         else
         {
             GGDebug.Log("=================mGrid是空的，哪里出了问题了==================");
+        }
+    }
+
+    //销毁一个节点
+    public void DelSnakeUnit()
+    {
+        GGDebug.Log("销毁蛇！！" + mSnakeList.Count);
+        if (mSnakeList.Count > 0)
+        {
+            mSnakeList.RemoveAt(0);
+            SetLifeNumText();
+        }
+        else
+        {
+            GGDebug.Log("Stop!!!!");
+            LogicPartController.GetInstance().isPause = true;
         }
     }
 
