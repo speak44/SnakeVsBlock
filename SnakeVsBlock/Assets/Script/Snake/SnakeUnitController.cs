@@ -9,7 +9,7 @@ public class SnakeUnitController : MonoBehaviour
     public static float moveSpeed;
     private const string PREFAB_PATH = "Prefab/SnakeUnit";
     private SnakeUnitController _parent;
-    private int _index;
+    private int _index;   
     private Vector3 _currentTarget;
     private Vector3 _lastTarget;
     private float _speedMagnitude;
@@ -20,7 +20,7 @@ public class SnakeUnitController : MonoBehaviour
 
     public int index { get { return _index; } }
     private float _moveSpeedCount;
-
+      
     public static SnakeUnitController Create(SnakeUnitController parent, int i)
     {
         GameObject go = Instantiate(Resources.Load(PREFAB_PATH)) as GameObject;
@@ -88,6 +88,6 @@ public class SnakeUnitController : MonoBehaviour
     private void Log(int index, string debug)
     {
         if (this.index == index)
-            Debug.Log(debug);
+            GGDebug.Log(debug);
     }
 }

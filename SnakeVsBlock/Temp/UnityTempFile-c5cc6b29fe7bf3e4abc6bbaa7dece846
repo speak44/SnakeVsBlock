@@ -83,6 +83,7 @@
 -define:UNITY_EDITOR_WIN
 -define:UNITY_TEAM_LICENSE
 -define:UNITY_PRO_LICENSE
+Assets/Framework/GGDebug.cs
 Assets/LianUI/Script/Source/Canvas2DWorldFix.cs
 Assets/Script/CameraController.cs
 Assets/Script/DragEventListener.cs

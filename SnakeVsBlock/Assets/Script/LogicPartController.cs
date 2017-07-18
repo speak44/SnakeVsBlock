@@ -14,7 +14,7 @@ public class LogicPartController : MonoBehaviour {
     {
         if (instance)
         {
-            Debug.LogError("======================================Constructor twice!!!===================================");
+            GGDebug.LogError("======================================Constructor twice!!!===================================");
         }
         instance = this;
         Application.targetFrameRate = 60;
@@ -45,22 +45,34 @@ public class LogicPartController : MonoBehaviour {
             snakeList[i].MyUpdate();
         }
 
-        //墙
+        //创造障碍物
         Vector3 curSnakePos = SnakeManage.GetInstance().GetLifeNumTextPos();
-        Debug.Log("=======================================================" + Screen.height / 2);
         if ((WallManage.GetInstance().curCreateWallIndex*Global.wallHeight/2 - curSnakePos.y) <= Screen.height/2) //创建新的一排障碍物
         {
-            //Debug.Log("=======================================" + (WallManage.GetInstance().curCreateWallIndex * Global.wallHeight / 2 - curSnakePos.y));
-            WallManage.GetInstance().CreateInitHorizontalWall();
-            WallManage.GetInstance().curCreateWallIndex++;
-            //if (WallManage.GetInstance().curCreateWallIndex == 7) //初始第一排
-            //{
-            //WallManage.GetInstance().CreateInitHorizontalWall();
-            //}
-            //else
-            //{
-
-            //}
+            if (WallManage.GetInstance().curHorizontalType == Global.WallHorizontalType.INIT) //初始第一排
+            {
+                WallManage.GetInstance().CreateInitHorizontalWall();
+            }
+            else
+            {
+                if (WallManage.GetInstance().curHorizontalType == Global.WallHorizontalType.NONE) //空墙
+                {
+                    GGDebug.Log("=====================怎么创建空墙了==========================");
+                    //WallManage.GetInstance().CreateNoneWall();
+                }
+                else if (WallManage.GetInstance().curHorizontalType == Global.WallHorizontalType.SINGLE_WALL) //零散墙
+                {
+                    WallManage.GetInstance().CreateSingleWall();
+                }
+                else if (WallManage.GetInstance().curHorizontalType == Global.WallHorizontalType.FRANCE) //单格栅栏 双格栅栏
+                {
+                    WallManage.GetInstance().CreateFrance();
+                }
+                else if (WallManage.GetInstance().curHorizontalType == Global.WallHorizontalType.FULL_WALL) //满墙
+                {
+                    WallManage.GetInstance().CreateFullWall();
+                }
+            }
         }
     }
 }

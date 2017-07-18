@@ -19,7 +19,7 @@ public class SnakeManage : MonoBehaviour {
     {
         if (instance)
         {
-            Debug.LogError("Constructor twice!!!");
+            GGDebug.LogError("Constructor twice!!!");
         }
         instance = this;
 
@@ -65,7 +65,7 @@ public class SnakeManage : MonoBehaviour {
     {
         if (lifeNumText == null)
         {
-            Debug.Log("=================lifeNumText是空的，哪里出问题了====================");
+            GGDebug.Log("=================lifeNumText是空的，哪里出问题了====================");
             return;
         }
         else
@@ -94,7 +94,7 @@ public class SnakeManage : MonoBehaviour {
     {
         if (this.lifeCounts < 0)
         {
-            Debug.Log("=============================lifeCount不可以赋值为负数=============================");
+            GGDebug.Log("=============================lifeCount不可以赋值为负数=============================");
             return;
         }
         else
@@ -112,7 +112,7 @@ public class SnakeManage : MonoBehaviour {
         }
         else
         {
-            Debug.Log("=================mGrid是空的，哪里出了问题了==================");
+            GGDebug.Log("=================mGrid是空的，哪里出了问题了==================");
         }
     }
 
